@@ -8,6 +8,18 @@ A local Codex plugin for project activity, unread results, and linked todos. Bui
 
 [MIT](LICENSE) · [版本记录](CHANGELOG.md) · [图标能力与限制](docs/branding.md) · [验收记录](docs/design-qa.md)
 
+## 界面预览
+
+**项目总览** · 在同一屏查看各项目的进行中会话、完成未读和待办。
+
+![Project Pulse 项目总览：自适应多列卡片展示各项目的会话与待办状态](docs/images/project-overview.png)
+
+**关联待办** · 为项目或会话记录下一步行动，设置优先级与截止日期。
+
+![Project Pulse 关联待办：待办绑定项目，并显示优先级与截止日期](docs/images/linked-todos.png)
+
+截图已裁切并脱敏；私人项目名、路径和待办内容已替换为匿名示例，头像已移除。
+
 ## 能做什么
 
 - **跨项目总览**：读取本机已导入项目，展示进行中会话、完成未读、待办和最近活动。
