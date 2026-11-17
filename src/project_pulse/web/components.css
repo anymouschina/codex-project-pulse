@@ -1,0 +1,297 @@
+/* Shared controls keep popovers inside the dialog's accessible focus scope. */
+#overlay:not(:empty) {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.overlay-backdrop,
+.dialog {
+  pointer-events: auto;
+}
+.dialog {
+  position: relative;
+  inset: auto;
+  transform: none;
+}
+.form-field {
+  min-width: 0;
+}
+.field-error {
+  margin: 5px 0 0;
+  color: #ad4e4e;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.field-error:empty {
+  display: none;
+}
+.form-field[data-invalid] .form-input,
+.form-field[data-invalid] .ts-control {
+  border-color: #b45a5a;
+}
+.ts-wrapper {
+  font: inherit;
+  padding: 0;
+  border: 0;
+}
+.ts-wrapper.single .ts-control {
+  min-height: 38px;
+  height: 38px;
+  padding: 8px 32px 8px 10px;
+  border: 1px solid #dedede;
+  border-radius: 7px;
+  box-shadow: none;
+  background: #fff;
+  color: #424242;
+  cursor: pointer;
+  align-items: center;
+  flex-wrap: nowrap;
+  font: inherit;
+}
+.ts-wrapper.single .ts-control::after {
+  content: "";
+  position: absolute;
+  right: 13px;
+  top: 14px;
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-right: 1.5px solid #777;
+  border-bottom: 1.5px solid #777;
+  transform: rotate(45deg);
+}
+.ts-wrapper.dropdown-active.single .ts-control::after {
+  top: 17px;
+  transform: rotate(225deg);
+}
+.ts-wrapper.focus .ts-control {
+  border-color: #929292;
+  box-shadow: 0 0 0 2px #eaeaea;
+}
+.ts-wrapper.disabled .ts-control {
+  background: #f7f7f7;
+  color: #999;
+  opacity: 1;
+  cursor: not-allowed;
+}
+.ts-wrapper.single .ts-control > div,
+.ui-selected-text {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ui-selected-detail {
+  color: #8c8c8c;
+}
+.ts-control .items-placeholder {
+  font: inherit;
+  cursor: pointer;
+}
+.ts-wrapper .ts-control .items-placeholder:focus {
+  outline: none;
+}
+.ui-select-popup.ts-dropdown {
+  z-index: 80;
+  box-sizing: border-box;
+  border: 1px solid #dedede;
+  border-radius: 9px;
+  box-shadow: 0 8px 28px #0000001a;
+  background: #fff;
+  color: #444;
+  overflow: hidden;
+  font: inherit;
+}
+.ui-select-popup .dropdown-input-wrap {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+.ui-select-popup .dropdown-input {
+  width: 100%;
+  height: 32px;
+  padding: 5px 8px;
+  border: 1px solid #dedede;
+  border-radius: 6px;
+  box-shadow: none;
+  outline: none;
+  background: #fafafa;
+  color: #333;
+  font: inherit;
+}
+.ui-select-popup .dropdown-input:focus {
+  border-color: #999;
+  outline: none;
+  box-shadow: none;
+}
+.ui-select-popup .ts-dropdown-content {
+  padding: 4px;
+  overscroll-behavior: contain;
+}
+.ui-select-popup .ui-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  padding: 7px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.ui-option-copy {
+  flex: 1;
+  min-width: 0;
+}
+.ui-option-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  line-height: 1.45;
+}
+.ui-option-detail {
+  display: block;
+  color: #888;
+  font-size: 11px;
+  line-height: 1.4;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ui-select-popup .active {
+  background: #f0f0f0;
+  color: #252525;
+}
+.ui-select-popup .selected {
+  background: #f5f5f5;
+  color: #252525;
+}
+.ui-option-check {
+  visibility: hidden;
+  font-size: 14px;
+}
+.selected .ui-option-check {
+  visibility: visible;
+}
+.ui-select-popup .highlight {
+  background: #e4e4e4;
+  border-radius: 2px;
+}
+.ui-select-empty {
+  padding: 18px 10px;
+  text-align: center;
+  color: #888;
+  font-size: 12px;
+}
+.date-input[readonly] {
+  cursor: pointer;
+  background: #fff
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23858585' stroke-width='1.6'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M16 3v4M8 3v4M3 11h18'/%3E%3C/svg%3E")
+    no-repeat right 10px center;
+  padding-right: 32px;
+}
+.ui-calendar.flatpickr-calendar {
+  z-index: 80;
+  box-sizing: border-box;
+  padding: 8px;
+  border: 1px solid #dedede;
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: 0 8px 28px #0000001a;
+  color: #333;
+  overflow: auto;
+  font: inherit;
+}
+.ui-calendar::before,
+.ui-calendar::after {
+  display: none;
+}
+.ui-calendar .flatpickr-innerContainer,
+.ui-calendar .flatpickr-rContainer,
+.ui-calendar .flatpickr-days,
+.ui-calendar .dayContainer {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+.ui-calendar .flatpickr-current-month {
+  padding-top: 7px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.ui-calendar .flatpickr-current-month .cur-month {
+  font-weight: 500;
+}
+.ui-calendar .flatpickr-prev-month,
+.ui-calendar .flatpickr-next-month {
+  padding: 8px;
+  top: 8px;
+  color: #666;
+}
+.ui-calendar .flatpickr-prev-month {
+  left: 8px;
+}
+.ui-calendar .flatpickr-next-month {
+  right: 8px;
+}
+.ui-calendar .flatpickr-prev-month svg,
+.ui-calendar .flatpickr-next-month svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+}
+.ui-calendar [role="button"]:focus-visible {
+  outline: 2px solid #929292;
+  outline-offset: -2px;
+  border-radius: 5px;
+}
+.ui-calendar span.flatpickr-weekday {
+  color: #939393;
+  font-size: 11px;
+  font-weight: 400;
+}
+.ui-calendar .flatpickr-day {
+  max-width: none;
+  height: 34px;
+  line-height: 32px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.ui-calendar .flatpickr-day.today {
+  border-color: #bdbdbd;
+}
+.ui-calendar .flatpickr-day:hover,
+.ui-calendar .flatpickr-day:focus {
+  background: #efefef;
+  border-color: #efefef;
+  color: #333;
+}
+.ui-calendar .flatpickr-day.selected,
+.ui-calendar .flatpickr-day.selected:hover {
+  background: #252525;
+  border-color: #252525;
+  color: #fff;
+}
+.calendar-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px solid #eee;
+}
+.calendar-footer button {
+  min-height: 28px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  color: #666;
+}
+.calendar-footer button:hover {
+  background: #f0f0f0;
+  color: #222;
+}

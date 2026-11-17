@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "project_pulse": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "project_pulse.mcp_server"
+      ],
+      "cwd": "${PLUGIN_ROOT}/src"
+    }
+  }
+}

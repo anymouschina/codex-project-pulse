@@ -1,0 +1,45 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "codex-project-pulse",
+  "version": "0.1.11",
+  "description": "A local dashboard for Codex projects, unread results, and linked todos.",
+  "author": {
+    "name": "saber",
+    "url": "https://github.com/saberc8"
+  },
+  "keywords": [
+    "codex",
+    "projects",
+    "dashboard",
+    "todos"
+  ],
+  "extensions": {
+    "com.openai": {
+      "requires_local_executor": true,
+      "interface": {
+        "displayName": "Project Pulse · 项目总控台",
+        "shortDescription": "项目进展、未读结果与待办",
+        "longDescription": "集中查看本机 Codex 项目、进行中会话、完成未读结果；为项目或会话绑定待办，并跳转回原对话。数据仅保存在本机。",
+        "developerName": "saber",
+        "category": "Productivity",
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "brandColor": "#202020",
+        "defaultPrompt": [
+          "打开项目总控台",
+          "看看哪些项目有未读结果",
+          "给当前项目添加一个待办"
+        ],
+        "composerIcon": "./assets/icon-outline.svg",
+        "logo": "./assets/logo.png",
+        "composerIconDark": "./assets/icon-outline-dark.svg",
+        "logoDark": "./assets/icon-solid-dark.svg"
+      }
+    }
+  },
+  "homepage": "https://github.com/saberc8/codex-project-pulse",
+  "repository": "https://github.com/saberc8/codex-project-pulse",
+  "license": "MIT"
+}
