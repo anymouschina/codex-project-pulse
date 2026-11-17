@@ -1,13 +1,13 @@
 {
   "name": "codex-project-pulse",
   "version": "0.1.11",
-  "description": "A local dashboard for Codex projects, unread results, and linked todos.",
+  "description": "A Codex desktop plugin for project activity, unread results, and linked todos.",
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "requires_local_executor": true,
   "interface": {
     "displayName": "Project Pulse · 项目总控台",
-    "shortDescription": "项目进展、未读结果与待办",
+    "shortDescription": "Codex 插件：项目进展、未读与待办",
     "developerName": "saber",
     "category": "Productivity",
     "capabilities": [

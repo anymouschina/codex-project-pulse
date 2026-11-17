@@ -1,10 +1,10 @@
-# Project Pulse
+# Project Pulse · Codex 项目管理插件
 
 <img src="assets/logo.png" width="96" height="96" alt="Project Pulse">
 
-**在一个面板里掌握 Codex 各项目的进展、未读结果和下一步待办。**
+**一个直接在 Codex 中使用的项目管理插件。** 一屏查看各项目的进行中会话、完成未读结果和关联待办，点击即可回到原对话。
 
-A local Codex plugin for project activity, unread results, and linked todos. Built with Python's standard library and vanilla JavaScript. No API key or frontend build required.
+A Codex desktop plugin for tracking project activity, unread results, and linked todos. See what is running across projects and jump directly to the original chats.
 
 [MIT](LICENSE) · [版本记录](CHANGELOG.md) · [图标能力与限制](docs/branding.md) · [验收记录](docs/design-qa.md)
 
