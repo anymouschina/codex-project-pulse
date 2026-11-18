@@ -108,6 +108,14 @@ def desktop_unread_index(state):
     return {"known": True, "ids": set(ids), "scope": scope}
 
 
+def match_root(cwd, projects):
+    """The project whose root contains cwd; the longest root wins."""
+    cwd = os.path.normpath(cwd)
+    matches = [(len(root), p["id"]) for p in projects for root in p["roots"]
+               if cwd == root or cwd.startswith(root.rstrip(os.sep) + os.sep)]
+    return max(matches)[1] if matches else None
+
+
 def project_for(row, projects, assignments, migration):
     explicit = assignments.get(row["id"], {}).get("projectId")
     by_id = {p["id"]: p for p in projects}
@@ -116,10 +124,7 @@ def project_for(row, projects, assignments, migration):
     native = migration.get(row.get("project_id"), row.get("project_id"))
     if native in by_id:
         return native
-    cwd = os.path.normpath(row["cwd"])
-    matches = [(len(root), p["id"]) for p in projects for root in p["roots"]
-               if cwd == root or cwd.startswith(root.rstrip(os.sep) + os.sep)]
-    return max(matches)[1] if matches else None
+    return match_root(row["cwd"], projects)
 
 
 class CodexReader:
@@ -184,6 +189,7 @@ class CodexReader:
                         "readStateSource": "desktop-v1" if desktop_read["known"] else "unavailable",
                         "readRevision": f"desktop-v1:{desktop_read['scope']}:{turn_id}:{int(unread)}" if desktop_read["known"] else None,
                         "url": "codex://threads/" + row["id"],
+                        "agent": "codex", "agentLabel": "Codex",
                     })
             return {"projects": projects, "sessions": sessions, "source": {
                 "mode": "local-readonly", "label": "本机 Codex", "updatedAt": now,
@@ -259,7 +265,9 @@ class Store:
         for p in snapshot["projects"]:
             items = [s for s in snapshot["sessions"] if s["projectId"] == p["id"]]
             p.update({"pinned": p["id"] in pinned, "sessionCount": len(items), "running": sum(s["status"] == "running" for s in items), "unread": sum(s["needsReview"] for s in items), "failed": sum(s["status"] == "failed" for s in items), "todoCount": sum(t["projectId"] == p["id"] and t["status"] != "done" for t in todos), "updatedAt": max((s["updatedAt"] for s in items), default=0)})
-            p["unreadKnown"] = all(s["unreadKnown"] for s in items)
+            # Only Codex has a read state. Other agents' sessions neither count as
+            # unread nor make the whole project's unread count unknown.
+            p["unreadKnown"] = all(s["unreadKnown"] for s in items if s.get("agent", "codex") == "codex")
         snapshot["todos"] = todos
         # The entrypoint badge follows unread chats regardless of their current
         # turn status. The existing completed-unread inbox keeps its own count.

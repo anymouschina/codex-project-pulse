@@ -28,6 +28,10 @@ from project_pulse.ui_resource import URI, MIME, resource
 
 class PulseTest(unittest.TestCase):
     def setUp(self):
+        # The Codex adapter is tested alone; never read the developer's other agents.
+        self.isolation = __import__('unittest.mock').mock.patch.dict(os.environ, {'PULSE_CLAUDE_DIRS': '', 'PULSE_MAGPIE_BIN': ''})
+        self.isolation.start()
+        self.addCleanup(self.isolation.stop)
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
         self.home = self.root / 'codex'
