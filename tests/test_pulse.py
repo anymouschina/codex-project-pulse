@@ -65,6 +65,20 @@ class PulseTest(unittest.TestCase):
         self.assertEqual(before,{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in paths})
         self.assertEqual(self.reader.result('s1')['text'],'Final answer')
 
+    def test_reads_wal_database_after_app_removed_its_sidecar_files(self):
+        path = self.home / 'thread_history_1.sqlite'
+        with sqlite3.connect(path) as db:
+            db.execute('PRAGMA journal_mode=WAL')
+        with sqlite3.connect(path) as db:
+            db.execute('PRAGMA wal_checkpoint(TRUNCATE)')
+        for suffix in ('-wal', '-shm'):
+            path.with_name(path.name + suffix).unlink(missing_ok=True)
+        before = hashlib.sha256(path.read_bytes()).hexdigest()
+        self.assertEqual(self.reader.result('s1')['text'], 'Final answer')
+        self.assertEqual({s['id'] for s in self.reader.snapshot()['sessions']}, {'s1', 's2', 'assigned'})
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), before)
+        self.assertFalse(path.with_name(path.name + '-shm').exists())
+
     def test_complete_and_unknown_are_not_guessed_from_idle(self):
         self.assertEqual(status_of(None,self.now,self.now),'unknown')
         self.assertEqual(status_of({'status':'inProgress'},self.now-8000,self.now),'unknown')

@@ -29,13 +29,34 @@ def display_title(raw):
     return text[:150] + ('…' if len(text) > 150 else '') if text else '未命名会话'
 
 
+def _open(uri):
+    conn = sqlite3.connect(uri, uri=True, timeout=2)
+    try:
+        conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA query_only=ON")
+        # Opening is lazy; touch the schema so a failed open surfaces here.
+        conn.execute("SELECT count(*) FROM sqlite_master").fetchone()
+    except sqlite3.Error:
+        conn.close()
+        raise
+    return conn
+
+
 def readonly(path: Path):
     if not path.is_file():
         raise Unavailable(f"找不到本机 Codex 数据文件：{path.name}")
-    conn = sqlite3.connect(path.resolve().as_uri() + "?mode=ro", uri=True, timeout=2)
-    conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA query_only=ON")
-    return conn
+    uri = path.resolve().as_uri()
+    try:
+        return _open(uri + "?mode=ro")
+    except sqlite3.OperationalError:
+        # A WAL-mode database whose -wal/-shm files were removed when the app
+        # exited cannot be opened with mode=ro: SQLite would have to create the
+        # shared-memory file. With no -wal content the main file is complete,
+        # so reading it as immutable is exact and still never writes.
+        wal = path.with_name(path.name + "-wal")
+        if wal.exists() and wal.stat().st_size:
+            raise
+        return _open(uri + "?immutable=1")
 
 
 def status_of(turn, updated_at, now):
